@@ -1,3 +1,22 @@
+/**
+ * Copyright 2014 A-Team Games
+ *
+ * This file is part of ateam-tanks.
+ *
+ *    ateam-tanks is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    ateam-tanks is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with ateam-tanks.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /*
  * This is a general class for anything that might
  * be placed, removed, or move or change in any way
@@ -14,6 +33,7 @@
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.Color;
 
 public abstract class Sprite
 {
@@ -21,8 +41,10 @@ public abstract class Sprite
     protected Vector3D position;
     protected Direction direction;
     protected HitBox hitbox;
+    protected double hitboxRadius=10;
+    protected Color color;
 
-    public Sprite ( ArrayList<Sprite> sprites, Vector3D p, Direction d, HitBox h )
+    public Sprite ( ArrayList<Sprite> sprites, Vector3D p, Direction d, HitBox h, Color c )
     {
         this.sprites = sprites;
         this.sprites.add ( this );
@@ -30,6 +52,7 @@ public abstract class Sprite
         this.position= new Vector3D ( p );
         this.direction = new Direction ( d );
         this.hitbox = new HitBox ( h );
+        this.color = c;
     }
 
     public abstract int update ();
@@ -38,8 +61,7 @@ public abstract class Sprite
 
     public boolean checkCollision ( Sprite other )
     {
-        //TODO
-        return false;
+        return position.distance(other.position)<hitboxRadius+other.hitboxRadius;
     }
     public ArrayList<Sprite> getAllCollisions ()
     {
@@ -75,6 +97,14 @@ public abstract class Sprite
     public void setDirection ( Direction d )
     {
         this.direction = d;
+    }
+    public Color getColor ()
+    {
+        return color;
+    }
+    public void setColor (Color c) 
+    {
+        this.color = c;
     }
 
     public void kill ()
