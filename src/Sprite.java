@@ -35,14 +35,15 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.Color;
 
-public abstract class Sprite
+public abstract class Sprite extends Object
 {
     protected SpriteList sprites;
     protected Vector3D position;
     protected Direction direction;
     protected HitBox hitbox;
-    protected double hitboxRadius=10;
     protected Color color;
+    protected boolean alive;
+    protected double hitboxRadius=1;
 
     public Sprite ( SpriteList sprites, Vector3D p, Direction d, HitBox h, Color c )
     {
@@ -53,13 +54,14 @@ public abstract class Sprite
         this.direction = new Direction ( d );
         this.hitbox = new HitBox ( h );
         this.color = c;
+        this.alive = true;
     }
 
     public abstract int update ();
 
     public abstract void damage ( int intensity );
 
-    // public abstract void paint(Graphics2D g);
+    public abstract void paint(Graphics2D g);
 
     public boolean checkCollision ( Sprite other )
     {
@@ -67,12 +69,14 @@ public abstract class Sprite
     }
     public ArrayList<Sprite> getAllCollisions ()
     {
+
         ArrayList<Sprite> collisions = new ArrayList<Sprite>();
         for ( Sprite sprite : this.sprites.getSprites() )
         {
-            collisions.add ( sprite );
+            if(sprite!=this&&checkCollision(sprite)){
+                collisions.add ( sprite );
+            }
         }
-        
         return collisions;
     }
 
@@ -111,6 +115,7 @@ public abstract class Sprite
 
     public void kill ()
     {
+        this . alive = false;
         sprites.remove ( this );
     }
     public static Arc2D.Double getCircle(double x,double y,double radius){

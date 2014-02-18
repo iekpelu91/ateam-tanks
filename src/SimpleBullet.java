@@ -19,6 +19,7 @@
 
 import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class SimpleBullet extends Projectile
 {
@@ -30,15 +31,27 @@ public class SimpleBullet extends Projectile
     
     public void reactToCollision ( ArrayList<Sprite> collisions )
     {
-        for ( Sprite hitSprite : collisions )
+        if ( this . alive )
         {
-            hitSprite . damage ( 5 ); // inflicts 5 damage on sprites (or tries to, anyway)
+            for ( Sprite hitSprite : collisions )
+            {
+                hitSprite . damage ( 5 ); // inflicts 5 damage on sprites (or tries to, anyway)
+            }
+            System.out.println ( "Boom!" );
+            this . kill (); // deletes self from the game
         }
-        this . kill (); // deletes self from the game
-        System.out.println ( "Boom!" );
+    }
+    public void paint(Graphics2D g){
+        double radius=2;
+        g.setColor(Color.white);
+        g.fill(Sprite.getCircle(position.getX(),position.getY(),radius));
     }
     public void damage ( int intensity )
     {
-        this . kill (); // deletes self from game upon any sort of damage
+        if ( this . alive )
+        {
+            System.out.println ( "Boom!" );
+            this . kill (); // deletes self from game upon any sort of damage
+        }
     }
 }
