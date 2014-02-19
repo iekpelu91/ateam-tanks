@@ -17,23 +17,25 @@
  *    along with ateam-tanks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * A very simple order for shooting SimpleBullets
- */
-public class ShootOrder extends Order
+import java.awt.Color;
+
+public class SpriteListTest
 {
-    private Direction direction;
+public static void main ( String args[] )
+{
+    SpriteList list = new SpriteList ();
 
-    public ShootOrder ( double theta )
-    {
-        super ( 1 );
-        // this type of bullet does not allow for adjusting the inclination -- it can only shoot parallel to the ground
-        this . direction = new Direction ( theta, 0 );
-    }
+    System.out.println ( "Size of empty list is " + list.getSprites().size() );
 
-    public void execSpecific ( SimpleTank tank )
-    {
-        System.out.println ( "Shooting" );
-        tank . shoot ( this . direction );
-    }
+    Obstacle o1 = new Obstacle ( list, new Vector3D(0,0,0), new Direction(0,0), new HitBox(1,1,1), Color.red );
+    list.add(o1);
+
+    System.out.println ( "Size of empty list is " + list.getSprites().size() );
+    list.update();
+    System.out.println ( "Size of non-empty list is " + list.getSprites().size() );
+    list.remove(o1);
+    System.out.println ( "Size of non-empty list is " + list.getSprites().size() );
+    list.update();
+    System.out.println ( "Size of empty list is " + list.getSprites().size() );
+}
 }

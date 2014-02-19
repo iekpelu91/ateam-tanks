@@ -17,23 +17,22 @@
  *    along with ateam-tanks.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * A very simple order for shooting SimpleBullets
- */
-public class ShootOrder extends Order
+import java.util.ArrayList;
+
+public interface ReadsMaps
 {
-    private Direction direction;
-
-    public ShootOrder ( double theta )
-    {
-        super ( 1 );
-        // this type of bullet does not allow for adjusting the inclination -- it can only shoot parallel to the ground
-        this . direction = new Direction ( theta, 0 );
-    }
-
-    public void execSpecific ( SimpleTank tank )
-    {
-        System.out.println ( "Shooting" );
-        tank . shoot ( this . direction );
-    }
+    /**
+     * Takes the name of a text file and generates a list of
+     * sprites from it.
+     *
+     * A sample map is in the maps folder.
+     * Maps are a list of lines describing sprites in the format:
+     *     
+     *     <sprite-type>,<x-position>,<y-position>,<z-position>,<radius(size)>
+     *
+     * It would be easiest to walk through a map file line by line
+     * and split each line by commas, then cast each string
+     * according to what it's supposed to represent.
+     */
+    public ArrayList<Sprite> readMap ( String nameOfMapFile );
 }
