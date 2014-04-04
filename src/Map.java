@@ -42,7 +42,7 @@ public static void main(String args[])
 	try{
 // Open the file that is the first 
 // command line parameter
-	FileInputStream fstream = new FileInputStream("e:\\School\\Spring 2014\\Software Engineering\\ateam-tanks\\src\\test.txt");
+	FileInputStream fstream = new FileInputStream("/test.txt");
 // Get the object of DataInputStream
 	DataInputStream in = new DataInputStream(fstream);
 	BufferedReader br = new BufferedReader(new InputStreamReader(in));
